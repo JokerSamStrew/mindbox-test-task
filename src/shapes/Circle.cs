@@ -5,6 +5,8 @@ public class Circle : IAreaCalculator
 {
     private double _radius;
 
+    double Radius => _radius;
+
     public Circle(double radius)
     {
         _radius = radius;
