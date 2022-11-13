@@ -1,26 +1,32 @@
 ﻿using System;
 namespace Shapes;
 
-public class Triangle : Shapes.IAreaCalculator
+public class Triangle : IAreaCalculator
 {
-    private float _firstSideSize;
-    private float _secondSideSize;
-    private float _thirdSideSize;
+    private double _firstSideSize;
+    private double _secondSideSize;
+    private double _thirdSideSize;
 
-    public Triangle(float firstSideSize, float secondSideSize, float thirdSideSize)
+    public Triangle(double firstSideSize, double secondSideSize, double thirdSideSize)
     {
         _firstSideSize = firstSideSize;
         _secondSideSize = secondSideSize;
         _thirdSideSize = thirdSideSize;
     }
 
-    public override string ToString()
+    public bool IsExist()
     {
-        return $"{base.ToString()} Side1: {_firstSideSize}, Side2: {_secondSideSize}, Side3: {_thirdSideSize}";
+        return _firstSideSize < _secondSideSize + _thirdSideSize
+        && _secondSideSize < _firstSideSize + _thirdSideSize
+        && _thirdSideSize < _firstSideSize + _secondSideSize;
     }
 
-    float Shapes.IAreaCalculator.CalculateArea()
+    double IAreaCalculator.CalculateArea()
     {
-        throw new NotImplementedException();
+        if (!IsExist())
+            throw new ShapesException($"Triangle with sides Side1: {_firstSideSize}, Side2: {_secondSideSize}, Side3: {_secondSideSize} cannot exist");
+
+        var p = (_firstSideSize + _secondSideSize + _thirdSideSize) / 2;
+        return Math.Sqrt(p * (p - _firstSideSize) * (p - _secondSideSize) * (p - _thirdSideSize));
     }
 }

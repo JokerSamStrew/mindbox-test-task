@@ -3,20 +3,22 @@ namespace Shapes;
 
 public class Circle : IAreaCalculator
 {
-    private float _radius;
+    private double _radius;
 
-    public Circle(float radius)
+    public Circle(double radius)
     {
         _radius = radius;
     }
 
-    public override string ToString()
+    public bool IsExist()
     {
-        return $"{base.ToString()} Radius: {_radius}";
+        return _radius > 0;
     }
-
-    float IAreaCalculator.CalculateArea()
+    double IAreaCalculator.CalculateArea()
     {
-        throw new NotImplementedException();
+        if (!IsExist())
+            throw new ShapesException($"Circle with radius {_radius} cannot exist");
+
+        return _radius * _radius * Math.PI;
     }
 }
