@@ -24,8 +24,38 @@ public class Tests
         Assert.AreEqual(result, area);
     }
 
+    [TestCase(3, 4, 5, true)]
+    [TestCase(4, 3, 5, true)]
+    [TestCase(5, 3, 4, true)]
+    [TestCase(7, 5, 3, false)]
+    public void SuccessTriangleAreaIsDirectTest(double firstSideSize, double secondSideSize, double thirdSideSize, bool result)
+    {
+        var triangle = new Triangle(firstSideSize, secondSideSize, thirdSideSize);
+        var isDirect = triangle.IsDirect();
+        Assert.AreEqual(result, isDirect);
+    }
+
     [TestCase(1, 2, 4)]
     [TestCase(-3, -3, -3)]
+    [TestCase(0, 0, 0)]
+    public void NotExistErrorTriangleIsDirectTest(double firstSideSize, double secondSideSize, double thirdSideSize)
+    {
+        try
+        {
+            var triangle = new Triangle(firstSideSize, secondSideSize, thirdSideSize);
+            var area = triangle.IsDirect();
+        }
+        catch (ShapesException)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+    }
+
+    [TestCase(1, 2, 4)]
+    [TestCase(-3, -3, -3)]
+    [TestCase(0, 0, 0)]
     public void NotExistErrorTriangleAreaCalculationTest(double firstSideSize, double secondSideSize, double thirdSideSize)
     {
         try
