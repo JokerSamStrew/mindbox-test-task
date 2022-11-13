@@ -1,5 +1,6 @@
 namespace unittests;
 
+
 public class Tests
 {
     [SetUp]
@@ -10,6 +11,7 @@ public class Tests
     [Test]
     public void Test1()
     {
+        shapes.Shape.TestFunction();
         Assert.Pass();
     }
 }
